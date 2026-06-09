@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact & Support – TeenEase</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="navbar-placeholder"></div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container position-relative" style="z-index:2;">
+    <div class="badge-tag">📬 We're Here For You</div>
+    <h1 style="font-family:'Poppins',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:900;color:#fff;margin-bottom:12px;">Contact & Support</h1>
+    <p style="color:rgba(255,255,255,0.82);font-size:1.05rem;max-width:540px;margin:0 auto;">
+      You don't have to handle everything alone. Reach out, ask questions, or just say hi. We read every message.
+    </p>
+  </div>
+</section>
+
+<section class="te-section">
+  <div class="container">
+    <div class="row g-5">
+
+      <!-- LEFT: FORM -->
+      <div class="col-lg-7" data-animate>
+        <div class="pill-label">Send a Message</div>
+        <h2 class="section-title mb-2">Talk to Us 💬</h2>
+        <p class="section-subtitle mb-4">
+          Have a question? Want to share something? Just want someone to talk to? Fill out the form below.
+        </p>
+
+        <div id="formSuccess" style="display:none;" class="te-alert te-alert-success mb-4">
+          🎉 <strong>Message sent!</strong> Thank you for reaching out. You're brave for taking this step. We'll get back to you soon. Remember — you are not alone. 💜
+        </div>
+
+        <div style="background:var(--card);border-radius:var(--radius);border:1.5px solid var(--border);box-shadow:var(--shadow);padding:36px;">
+          <div class="te-form-group" id="fg-name">
+            <label for="name">Your Name 👋</label>
+            <input type="text" id="name" placeholder="What should we call you?">
+            <div class="error-msg">Please enter your name (at least 2 characters)</div>
+          </div>
+
+          <div class="te-form-group" id="fg-email">
+            <label for="email">Email Address 📧</label>
+            <input type="email" id="email" placeholder="your.email@example.com">
+            <div class="error-msg">Please enter a valid email address</div>
+          </div>
+
+          <div class="te-form-group" id="fg-age">
+            <label for="age">Your Age 🎂</label>
+            <select id="age">
+              <option value="">Select your age group</option>
+              <option value="11-13">11-13 years</option>
+              <option value="14-15">14-15 years</option>
+              <option value="16-17">16-17 years</option>
+              <option value="18-19">18-19 years</option>
+              <option value="parent">I'm a parent / guardian</option>
+              <option value="teacher">I'm a teacher / counselor</option>
+            </select>
+            <div class="error-msg">Please select an option</div>
+          </div>
+
+          <div class="te-form-group" id="fg-topic">
+            <label for="topic">What's This About? 💭</label>
+            <select id="topic">
+              <option value="">Choose a topic</option>
+              <option value="exam-stress">📚 Exam Stress</option>
+              <option value="social-anxiety">🫂 Social Anxiety</option>
+              <option value="peer-pressure">👥 Peer Pressure</option>
+              <option value="confidence">💔 Low Confidence</option>
+              <option value="anger">😤 Anger Issues</option>
+              <option value="screen">📱 Screen Addiction</option>
+              <option value="relationships">💞 Relationships / Friendships</option>
+              <option value="family">🏠 Family Problems</option>
+              <option value="general">💬 General Question</option>
+              <option value="crisis">🆘 I Need Help Urgently</option>
+              <option value="feedback">⭐ Website Feedback</option>
+              <option value="other">🌀 Something Else</option>
+            </select>
+            <div class="error-msg">Please select a topic</div>
+          </div>
+
+          <div class="te-form-group" id="fg-message">
+            <label for="message">Your Message 💌</label>
+            <textarea id="message" rows="5" placeholder="Share what's on your mind. We're listening and we don't judge. Everything is safe here."></textarea>
+            <div class="error-msg">Please write at least 10 characters</div>
+            <div style="display:flex;justify-content:space-between;margin-top:5px;">
+              <span id="charCount" style="font-size:0.78rem;color:var(--text-muted);font-weight:600;">0 characters</span>
+              <span style="font-size:0.78rem;color:var(--text-muted);font-weight:600;">Minimum 10 characters</span>
+            </div>
+          </div>
+
+          <div class="te-form-group" id="fg-consent" style="margin-bottom:24px;">
+            <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-weight:600;font-size:0.9rem;">
+              <input type="checkbox" id="consent" style="width:18px;height:18px;accent-color:var(--primary);margin-top:2px;flex-shrink:0;">
+              <span>I understand that this is an informational website and not a professional mental health service. For urgent help, I will contact a professional or helpline.</span>
+            </label>
+            <div class="error-msg" id="consent-error" style="margin-top:5px;">Please acknowledge this to continue</div>
+          </div>
+
+          <button onclick="submitForm()" class="btn-purple" style="width:100%;padding:15px;font-size:1.05rem;">
+            Send Message 💜
+          </button>
+
+          <p style="color:var(--text-muted);font-size:0.8rem;text-align:center;margin-top:12px;">
+            🔒 Your message is private. We will never share your information.
+          </p>
+        </div>
+      </div>
+
+      <!-- RIGHT: SUPPORT INFO -->
+      <div class="col-lg-5" data-animate>
+
+        <!-- EMERGENCY -->
+        <div class="helpline-card mb-4">
+          <div style="font-size:1.5rem;margin-bottom:8px;">🆘</div>
+          <h4 class="mb-3">Need Help Right Now?</h4>
+          <p style="color:rgba(255,255,255,0.75);font-size:0.9rem;line-height:1.7;margin-bottom:16px;">
+            If you are in crisis or having thoughts of hurting yourself, please reach out to a professional immediately. You matter, and help is available.
+          </p>
+          <div class="mb-3">
+            <div style="color:rgba(255,255,255,0.6);font-size:0.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">iCall (India)</div>
+            <div class="helpline-num">9152987821</div>
+          </div>
+          <div class="mb-3">
+            <div style="color:rgba(255,255,255,0.6);font-size:0.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Vandrevala Foundation</div>
+            <div class="helpline-num">1860-2662-345</div>
+          </div>
+          <div>
+            <div style="color:rgba(255,255,255,0.6);font-size:0.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">iCall Chat Support</div>
+            <div style="color:var(--accent);font-weight:700;font-size:0.95rem;">icallhelpline.org</div>
+          </div>
+        </div>
+
+        <!-- WHAT TO EXPECT -->
+        <div class="te-card p-4 mb-4">
+          <h5 style="font-family:'Poppins',sans-serif;font-weight:800;margin-bottom:14px;">📬 What Happens After You Message Us?</h5>
+          <div class="d-flex flex-column gap-3">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="background:var(--bg2);border-radius:8px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.9rem;font-weight:800;color:var(--primary);">1</div>
+              <div style="font-size:0.88rem;color:var(--text-muted);line-height:1.6;font-weight:600;">Your message goes to our support team who genuinely cares about teens.</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="background:var(--bg2);border-radius:8px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.9rem;font-weight:800;color:var(--primary);">2</div>
+              <div style="font-size:0.88rem;color:var(--text-muted);line-height:1.6;font-weight:600;">We read it carefully without judgment and prepare a thoughtful response.</div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="background:var(--bg2);border-radius:8px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.9rem;font-weight:800;color:var(--primary);">3</div>
+              <div style="font-size:0.88rem;color:var(--text-muted);line-height:1.6;font-weight:600;">You'll receive a helpful reply within 1-2 business days with resources and guidance.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="te-card p-4">
+          <h5 style="font-family:'Poppins',sans-serif;font-weight:800;margin-bottom:14px;">❓ Common Questions</h5>
+          <div class="accordion te-accordion" id="faqAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" style="font-size:0.88rem;" data-bs-toggle="collapse" data-bs-target="#faq1">
+                  Is my message kept private?
+                </button>
+              </h2>
+              <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                <div class="accordion-body" style="font-size:0.85rem;">Yes, 100%. We never share your personal information with anyone. Your privacy is our priority.</div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" style="font-size:0.88rem;" data-bs-toggle="collapse" data-bs-target="#faq2">
+                  Are you a professional therapist?
+                </button>
+              </h2>
+              <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body" style="font-size:0.85rem;">TeenEase is an informational support platform, not a professional therapy service. For serious mental health concerns, we always recommend consulting a qualified counsellor or therapist.</div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" style="font-size:0.88rem;" data-bs-toggle="collapse" data-bs-target="#faq3">
+                  Can my parents see this?
+                </button>
+              </h2>
+              <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body" style="font-size:0.85rem;">Only you and our team see your message. We do not contact parents without your permission, unless there is a serious safety concern.</div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" style="font-size:0.88rem;" data-bs-toggle="collapse" data-bs-target="#faq4">
+                  What if I need help urgently?
+                </button>
+              </h2>
+              <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body" style="font-size:0.85rem;">Please call a helpline immediately! iCall: 9152987821 or Vandrevala Foundation: 1860-2662-345. They are available 24/7 and are trained to help you.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADDITIONAL RESOURCES -->
+<section class="te-section-alt">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="pill-label">Resources</div>
+      <h2 class="section-title">More Ways to Get Help 🌟</h2>
+    </div>
+    <div class="row g-4" data-animate>
+      <div class="col-md-4">
+        <div class="te-card p-4 text-center h-100">
+          <div style="font-size:2.5rem;margin-bottom:14px;">👨‍⚕️</div>
+          <h5 style="font-weight:800;font-family:'Poppins',sans-serif;margin-bottom:10px;">Talk to a School Counselor</h5>
+          <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.75;">Your school counselor is trained to help students with stress, anxiety, and personal problems. Their job is to help you — and it's confidential.</p>
+          <div class="te-alert te-alert-info mt-3" style="font-size:0.82rem;">💙 Tip: You can write a note to your counselor if talking feels hard.</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="te-card p-4 text-center h-100">
+          <div style="font-size:2.5rem;margin-bottom:14px;">👪</div>
+          <h5 style="font-weight:800;font-family:'Poppins',sans-serif;margin-bottom:10px;">Talk to a Trusted Adult</h5>
+          <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.75;">It could be a parent, relative, teacher, or neighbour. Sometimes just saying your problem out loud to someone you trust makes it feel 50% smaller.</p>
+          <div class="te-alert te-alert-success mt-3" style="font-size:0.82rem;">💚 You don't have to have all the answers. Just say "I'm struggling and I need support."</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="te-card p-4 text-center h-100">
+          <div style="font-size:2.5rem;margin-bottom:14px;">🧘</div>
+          <h5 style="font-weight:800;font-family:'Poppins',sans-serif;margin-bottom:10px;">Try These Free Apps</h5>
+          <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.75;">Free mental health apps can help you every day:</p>
+          <div style="text-align:left;font-size:0.85rem;color:var(--text-muted);line-height:2;font-weight:600;">
+            <div>📱 <strong>Headspace</strong> — Meditation & mindfulness</div>
+            <div>📱 <strong>Calm</strong> — Sleep & relaxation</div>
+            <div>📱 <strong>Wysa</strong> — AI emotional support</div>
+            <div>📱 <strong>Youper</strong> — Mood tracker & CBT</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL ENCOURAGEMENT -->
+<section class="te-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8" data-animate>
+        <div style="background:linear-gradient(135deg,var(--primary),#7C3AED);border-radius:var(--radius);padding:52px;text-align:center;color:#fff;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:-50px;right:-50px;width:200px;height:200px;background:rgba(255,255,255,0.05);border-radius:50%;"></div>
+          <div style="font-size:3rem;margin-bottom:16px;">💜</div>
+          <h2 style="font-family:'Poppins',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:14px;">You Are Seen. You Are Heard. You Matter.</h2>
+          <p style="color:rgba(255,255,255,0.85);font-size:1rem;line-height:1.75;max-width:480px;margin:0 auto 28px;">
+            Whatever you're going through right now, know this: it will get better. You don't have to go through it alone. There are people — and resources — ready to help.
+          </p>
+          <div class="d-flex justify-content-center flex-wrap gap-3">
+            <a href="tips.html" class="btn-te-primary">✨ Read Self-Help Tips</a>
+            <a href="funzone.html" class="btn-te-outline">🎮 Visit Fun Zone</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<div class="te-toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/components.js"></script>
+<script src="js/main.js"></script>
+<script>
+document.getElementById('navbar-placeholder').innerHTML = getNavbar('contact');
+document.getElementById('footer-placeholder').innerHTML = getFooter();
+document.getElementById('darkToggle').addEventListener('click', toggleDark);
+if (localStorage.getItem('teenease-theme') === 'dark') document.getElementById('darkToggle').innerHTML = '☀️ Light';
+
+// Char count
+document.getElementById('message').addEventListener('input', function() {
+  document.getElementById('charCount').textContent = this.value.length + ' characters';
+});
+
+// Form validation
+function validateField(id, groupId, condition) {
+  const fg = document.getElementById(groupId);
+  if (condition) {
+    fg.classList.remove('invalid');
+    fg.classList.add('valid');
+    return true;
+  } else {
+    fg.classList.remove('valid');
+    fg.classList.add('invalid');
+    return false;
+  }
+}
+
+function submitForm() {
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const age = document.getElementById('age').value;
+  const topic = document.getElementById('topic').value;
+  const message = document.getElementById('message').value.trim();
+  const consent = document.getElementById('consent').checked;
+
+  let valid = true;
+
+  valid = validateField('name', 'fg-name', name.length >= 2) && valid;
+  valid = validateField('email', 'fg-email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) && valid;
+  valid = validateField('age', 'fg-age', age !== '') && valid;
+  valid = validateField('topic', 'fg-topic', topic !== '') && valid;
+  valid = validateField('message', 'fg-message', message.length >= 10) && valid;
+
+  const consentFg = document.getElementById('fg-consent');
+  if (!consent) {
+    consentFg.classList.add('invalid');
+    document.getElementById('consent-error').style.display = 'block';
+    valid = false;
+  } else {
+    consentFg.classList.remove('invalid');
+    document.getElementById('consent-error').style.display = 'none';
+  }
+
+  if (!valid) {
+    showToast('⚠️ Please fill in all fields correctly');
+    return;
+  }
+
+  // Special message for crisis
+  if (topic === 'crisis') {
+    showToast('🆘 If urgent, please call 9152987821 NOW!', 6000);
+  }
+
+  // Success
+  document.getElementById('formSuccess').style.display = 'block';
+  document.getElementById('formSuccess').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  ['name','email','age','topic','message'].forEach(id => {
+    document.getElementById(id).value = typeof document.getElementById(id).value === 'string' ? '' : false;
+  });
+  document.getElementById('consent').checked = false;
+  ['fg-name','fg-email','fg-age','fg-topic','fg-message'].forEach(id => {
+    document.getElementById(id).classList.remove('valid','invalid');
+  });
+  document.getElementById('charCount').textContent = '0 characters';
+  showToast('💜 Message sent! We\'ll respond soon.', 4000);
+}
+</script>
+</body>
+</html>

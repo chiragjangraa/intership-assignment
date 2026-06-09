@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fun Zone – TeenEase</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Fun Zone Extra Styles */
+    .quiz-option {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 13px 18px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 600;
+      text-align: left;
+      width: 100%;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .quiz-option:hover { background: var(--bg2); border-color: var(--primary); }
+    .quiz-option.correct { background: #D1FAE5; border-color: #10B981; color: #065F46; }
+    .quiz-option.wrong { background: #FEE2E2; border-color: #EF4444; color: #991B1B; }
+    .quiz-option:disabled { cursor: not-allowed; }
+
+    .affirmation-box {
+      background: linear-gradient(135deg, #6C63FF, #A78BFA);
+      border-radius: var(--radius);
+      padding: 40px;
+      text-align: center;
+      color: #fff;
+    }
+
+    #affirmation-text {
+      font-size: 1.3rem;
+      font-weight: 700;
+      font-style: italic;
+      line-height: 1.6;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .challenge-card {
+      background: var(--card);
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: var(--transition);
+    }
+    .challenge-card:hover { transform: translateX(5px); border-color: var(--secondary); }
+    .challenge-card input[type="checkbox"] {
+      width: 20px; height: 20px; accent-color: var(--primary); flex-shrink: 0; cursor: pointer;
+    }
+    .challenge-card.done { opacity: 0.6; }
+    .challenge-card.done label { text-decoration: line-through; }
+  </style>
+</head>
+<body>
+
+<div id="navbar-placeholder"></div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container position-relative" style="z-index:2;">
+    <div class="badge-tag">🎮 Mental Wellness Made Fun</div>
+    <h1 style="font-family:'Poppins',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:900;color:#fff;margin-bottom:12px;">Welcome to the Fun Zone 🎉</h1>
+    <p style="color:rgba(255,255,255,0.82);font-size:1.05rem;max-width:540px;margin:0 auto;">
+      Taking care of your mental health doesn't have to be boring. Play games, breathe, challenge yourself, and feel better!
+    </p>
+  </div>
+</section>
+
+<section class="te-section">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- LEFT: BREATHING EXERCISE -->
+      <div class="col-lg-6" data-animate>
+        <div class="game-card h-100">
+          <span class="game-icon">🫁</span>
+          <h3 style="font-family:'Poppins',sans-serif;font-weight:800;margin-bottom:8px;">Box Breathing Exercise</h3>
+          <p style="color:var(--text-muted);font-size:0.92rem;margin-bottom:24px;">Used by athletes and doctors to calm stress instantly. Try 3 rounds and feel the difference.</p>
+
+          <div class="breath-circle" id="breathCircle" onclick="startBreathing()">
+            <span id="breathText" style="text-align:center;line-height:1.3;">Tap to<br>Start 🫁</span>
+          </div>
+
+          <div id="breathInstruction" style="font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:16px;min-height:28px;"></div>
+          <div id="breathCount" style="font-size:2rem;font-weight:900;color:var(--text);font-family:'Poppins',sans-serif;min-height:44px;"></div>
+          <div id="breathProgress" style="color:var(--text-muted);font-size:0.85rem;margin-top:8px;"></div>
+
+          <div style="background:var(--bg2);border-radius:var(--radius-sm);padding:16px;margin-top:20px;text-align:left;">
+            <div style="font-weight:800;font-size:0.88rem;margin-bottom:8px;">How it works:</div>
+            <div style="font-size:0.82rem;color:var(--text-muted);line-height:1.8;">
+              🌬️ Inhale 4 seconds → ⏸️ Hold 4 seconds → 💨 Exhale 4 seconds → ⏸️ Hold 4 seconds<br>
+              This pattern activates your parasympathetic nervous system — your natural calm mode.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: AFFIRMATION GENERATOR -->
+      <div class="col-lg-6" data-animate>
+        <div class="affirmation-box h-100 d-flex flex-column justify-content-between" style="min-height:400px;">
+          <div>
+            <span style="font-size:3rem;display:block;margin-bottom:12px;">💜</span>
+            <h3 style="font-family:'Poppins',sans-serif;font-weight:800;font-size:1.6rem;margin-bottom:8px;">Daily Affirmation</h3>
+            <p style="color:rgba(255,255,255,0.8);font-size:0.9rem;">Sometimes you just need someone to say the right thing. We got you.</p>
+          </div>
+          <div id="affirmation-text" style="padding:20px 0;">"Tap the button to receive your affirmation"</div>
+          <div>
+            <button onclick="newAffirmation()" style="background:rgba(255,255,255,0.2);border:2px solid rgba(255,255,255,0.4);color:#fff;border-radius:50px;padding:12px 28px;font-weight:800;font-size:0.95rem;cursor:pointer;transition:all 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+              ✨ Give me an affirmation
+            </button>
+            <div id="affirmation-counter" style="color:rgba(255,255,255,0.6);font-size:0.8rem;margin-top:10px;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- QUIZ SECTION -->
+    <div class="row mt-5" data-animate>
+      <div class="col-12">
+        <div class="game-card">
+          <span class="game-icon">🧠</span>
+          <h3 style="font-family:'Poppins',sans-serif;font-weight:800;margin-bottom:8px;">Mental Health Quiz</h3>
+          <p style="color:var(--text-muted);font-size:0.92rem;margin-bottom:28px;">Test what you know about mental health. Every question makes you smarter about your own brain!</p>
+
+          <div id="quiz-container">
+            <div id="quiz-progress" style="font-size:0.85rem;color:var(--text-muted);font-weight:700;margin-bottom:12px;">Question 1 of 8</div>
+            <div id="quiz-question" style="font-size:1.1rem;font-weight:800;margin-bottom:20px;color:var(--text);"></div>
+            <div id="quiz-options"></div>
+            <div id="quiz-feedback" style="display:none;padding:14px 18px;border-radius:var(--radius-sm);margin-bottom:16px;font-weight:700;font-size:0.92rem;"></div>
+            <button id="quiz-next" onclick="nextQuestion()" style="display:none;" class="btn-purple">Next Question →</button>
+            <div id="quiz-result" style="display:none;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEEKLY CHALLENGE -->
+    <div class="row mt-5 g-4" data-animate>
+      <div class="col-lg-6">
+        <div class="game-card h-100" style="text-align:left;">
+          <span class="game-icon" style="display:block;">🏆</span>
+          <h3 style="font-family:'Poppins',sans-serif;font-weight:800;margin-bottom:6px;">7-Day Kindness Challenge</h3>
+          <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:20px;">Being kind to others actually boosts YOUR happiness. Check off each challenge as you complete it!</p>
+
+          <div id="challengeList" class="d-flex flex-column gap-2"></div>
+          <div id="challengeScore" style="font-weight:800;color:var(--primary);font-size:1rem;margin-top:14px;"></div>
+        </div>
+      </div>
+
+      <!-- MOOD JOURNAL -->
+      <div class="col-lg-6">
+        <div class="game-card h-100" style="text-align:left;">
+          <span class="game-icon" style="display:block;">📓</span>
+          <h3 style="font-family:'Poppins',sans-serif;font-weight:800;margin-bottom:6px;">Quick Mood Journal</h3>
+          <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:16px;">Writing about your feelings for just 3 minutes can reduce stress by 30%. Try it now!</p>
+
+          <div style="margin-bottom:10px;">
+            <label style="font-weight:700;font-size:0.88rem;display:block;margin-bottom:6px;">How's your day been?</label>
+            <div class="mood-emojis" style="justify-content:flex-start;margin:0 0 12px;">
+              <button class="mood-btn" onclick="selectJournalMood(this,'😄')" style="padding:8px 12px;font-size:1.3rem;">😄</button>
+              <button class="mood-btn" onclick="selectJournalMood(this,'😐')" style="padding:8px 12px;font-size:1.3rem;">😐</button>
+              <button class="mood-btn" onclick="selectJournalMood(this,'😢')" style="padding:8px 12px;font-size:1.3rem;">😢</button>
+              <button class="mood-btn" onclick="selectJournalMood(this,'😤')" style="padding:8px 12px;font-size:1.3rem;">😤</button>
+            </div>
+          </div>
+
+          <label style="font-weight:700;font-size:0.88rem;display:block;margin-bottom:6px;">Write what's on your mind...</label>
+          <textarea id="journalEntry" placeholder="Today I felt... because... I learned that..." style="width:100%;height:120px;background:var(--bg);border:2px solid var(--border);border-radius:var(--radius-sm);padding:12px;font-family:'Nunito',sans-serif;font-size:0.9rem;font-weight:600;color:var(--text);resize:none;outline:none;transition:all 0.3s;" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;">
+            <span id="wordCount" style="font-size:0.8rem;color:var(--text-muted);font-weight:600;">0 words</span>
+            <button onclick="saveJournalEntry()" class="btn-purple" style="font-size:0.85rem;padding:9px 20px;">Save Entry 💾</button>
+          </div>
+          <div id="journalSaved" style="display:none;margin-top:10px;" class="te-alert te-alert-success">✅ Entry saved! You took care of yourself today. 💜</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MOOD CHECKER -->
+<section class="te-section-alt">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+        <div class="mood-section">
+          <h2 style="font-family:'Poppins',sans-serif;font-weight:800;font-size:1.8rem;margin-bottom:8px;">How Are You Feeling Right Now? 💭</h2>
+          <p style="color:rgba(255,255,255,0.8);">Get a personal message based on your current mood.</p>
+          <div class="mood-emojis">
+            <button class="mood-btn" data-mood="happy" onclick="checkMood('happy')">😄 <span class="mood-label">Happy</span></button>
+            <button class="mood-btn" data-mood="okay" onclick="checkMood('okay')">😐 <span class="mood-label">Okay</span></button>
+            <button class="mood-btn" data-mood="sad" onclick="checkMood('sad')">😢 <span class="mood-label">Sad</span></button>
+            <button class="mood-btn" data-mood="angry" onclick="checkMood('angry')">😤 <span class="mood-label">Angry</span></button>
+            <button class="mood-btn" data-mood="anxious" onclick="checkMood('anxious')">😰 <span class="mood-label">Anxious</span></button>
+            <button class="mood-btn" data-mood="tired" onclick="checkMood('tired')">😴 <span class="mood-label">Tired</span></button>
+          </div>
+          <div class="mood-response" id="moodResponse"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-placeholder"></div>
+<div class="te-toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/components.js"></script>
+<script src="js/main.js"></script>
+<script>
+document.getElementById('navbar-placeholder').innerHTML = getNavbar('fun');
+document.getElementById('footer-placeholder').innerHTML = getFooter();
+document.getElementById('darkToggle').addEventListener('click', toggleDark);
+if (localStorage.getItem('teenease-theme') === 'dark') document.getElementById('darkToggle').innerHTML = '☀️ Light';
+
+// ===== BREATHING =====
+let breathingActive = false;
+let breathTimer = null;
+let breathRound = 0;
+const MAX_ROUNDS = 3;
+
+function startBreathing() {
+  if (breathingActive) {
+    breathingActive = false;
+    clearTimeout(breathTimer);
+    document.getElementById('breathCircle').style.transform = '';
+    document.getElementById('breathText').innerHTML = 'Tap to<br>Start 🫁';
+    document.getElementById('breathInstruction').textContent = '';
+    document.getElementById('breathCount').textContent = '';
+    document.getElementById('breathProgress').textContent = '';
+    breathRound = 0;
+    return;
+  }
+  breathingActive = true;
+  breathRound = 0;
+  runBreathPhase('inhale');
+}
+
+function runBreathPhase(phase) {
+  if (!breathingActive) return;
+  const circle = document.getElementById('breathCircle');
+  const text = document.getElementById('breathText');
+  const instr = document.getElementById('breathInstruction');
+  const count = document.getElementById('breathCount');
+  const prog = document.getElementById('breathProgress');
+
+  const phases = [
+    { name:'inhale', label:'Breathe In 🌬️', duration:4, scale:1.4 },
+    { name:'hold1', label:'Hold ⏸️', duration:4, scale:1.4 },
+    { name:'exhale', label:'Breathe Out 💨', duration:4, scale:1.0 },
+    { name:'hold2', label:'Hold ⏸️', duration:4, scale:1.0 },
+  ];
+
+  const idx = phases.findIndex(p => p.name === phase);
+  const p = phases[idx];
+
+  instr.textContent = p.label;
+  circle.style.transform = `scale(${p.scale})`;
+  circle.style.transition = `transform ${p.duration}s ease-in-out`;
+  text.innerHTML = p.label;
+
+  let t = p.duration;
+  count.textContent = t;
+  const countdown = setInterval(() => {
+    t--;
+    if (t > 0) count.textContent = t;
+    else { clearInterval(countdown); }
+  }, 1000);
+
+  breathTimer = setTimeout(() => {
+    const nextIdx = (idx + 1) % phases.length;
+    if (nextIdx === 0) { breathRound++; }
+    prog.textContent = `Round ${breathRound + 1} of ${MAX_ROUNDS}`;
+    if (breathRound >= MAX_ROUNDS) {
+      breathingActive = false;
+      text.innerHTML = 'Done! 🌟';
+      instr.textContent = 'Amazing! Feel the calm? 🧘';
+      count.textContent = '';
+      prog.textContent = `Completed ${MAX_ROUNDS} rounds!`;
+      circle.style.transform = 'scale(1)';
+      showToast('🫁 Breathing complete! Great job!');
+      return;
+    }
+    runBreathPhase(phases[nextIdx].name);
+  }, p.duration * 1000);
+}
+
+// ===== AFFIRMATIONS =====
+const affirmations = [
+  "You are worthy of love and belonging, exactly as you are.",
+  "Your struggles do not define you — your courage to face them does.",
+  "You have survived 100% of your worst days so far. You are a warrior.",
+  "It is okay to take things slowly. You don't have to have it all figured out.",
+  "You bring something unique and beautiful to this world that nobody else can.",
+  "Your feelings are valid. Your pain is real. And so is your ability to heal.",
+  "You are more than your grades, your looks, or your social media following.",
+  "Every small step you take forward is a win. Keep going, one step at a time.",
+  "You are not your anxiety. You are not your sadness. You are so much more.",
+  "The world is genuinely better with you in it. Don't forget that.",
+  "You are allowed to change your mind, grow, and become a new version of yourself.",
+  "Be gentle with yourself. You are a work in progress, and that is beautiful.",
+  "Your kindness, your laughter, your quirks — these are your superpowers.",
+  "Hard times are temporary. Your strength is permanent.",
+  "You deserve peace, happiness, and all the good things. Don't settle for less.",
+];
+
+let affirmationCount = 0;
+
+function newAffirmation() {
+  const el = document.getElementById('affirmation-text');
+  el.style.opacity = 0;
+  const idx = Math.floor(Math.random() * affirmations.length);
+  affirmationCount++;
+  setTimeout(() => {
+    el.textContent = `"${affirmations[idx]}"`;
+    el.style.opacity = 1;
+    el.style.transition = 'opacity 0.5s ease';
+    document.getElementById('affirmation-counter').textContent = `Affirmation #${affirmationCount} received 💜`;
+  }, 300);
+}
+
+// ===== QUIZ =====
+const quizData = [
+  { q: "Feeling anxious before an exam is:", opts: ["A sign you're weak", "Completely normal for teens", "Only for babies", "A disease"], ans: 1, explain: "Anxiety before exams is super common! Almost every student feels it. It's your brain trying to prepare you." },
+  { q: "The best way to handle anger is to:", opts: ["Hit something", "Suppress it completely", "Express it in a healthy way (exercise, journaling)", "Take revenge"], ans: 2, explain: "Healthy expression is key! Exercise, writing, or talking about it are all great ways to process anger without causing harm." },
+  { q: "Social media mostly shows:", opts: ["Real everyday life", "People's highlight reels only", "Accurate news", "Boring content"], ans: 1, explain: "Social media is a highlight reel! People post their best moments, not their bad days. Comparing yourself to it is unfair to you." },
+  { q: "Getting 8 hours of sleep as a teen is:", opts: ["Lazy", "Too much", "Essential for your brain", "Only needed for adults"], ans: 2, explain: "Teen brains are actively developing and NEED 8-9 hours of sleep to process memories, manage emotions, and grow." },
+  { q: "Asking for help when you're struggling is:", opts: ["Weak", "Embarrassing", "Brave and smart", "A waste of time"], ans: 2, explain: "Asking for help is one of the bravest and most intelligent things you can do. It shows you value yourself." },
+  { q: "Which of these is NOT a sign of exam stress?", opts: ["Trouble sleeping", "Feeling confident and prepared", "Loss of appetite", "Inability to concentrate"], ans: 1, explain: "Feeling confident and prepared means you're MANAGING stress well. The others are classic stress symptoms to watch for." },
+  { q: "Peer pressure can sometimes be:", opts: ["Always bad", "Always good", "Both positive and negative", "Only from strangers"], ans: 2, explain: "Positive peer pressure exists! Friends who push you to study harder, exercise, or try healthy new things are great influences." },
+  { q: "The 5-4-3-2-1 grounding technique helps with:", opts: ["Studying faster", "Anxiety and panic", "Sleeping longer", "Eating better"], ans: 1, explain: "The 5-4-3-2-1 technique (5 things you see, 4 you can touch, etc.) is an evidence-based way to stop anxiety in its tracks." },
+];
+
+let currentQ = 0;
+let score = 0;
+let answered = false;
+
+function loadQuestion() {
+  const q = quizData[currentQ];
+  document.getElementById('quiz-progress').textContent = `Question ${currentQ + 1} of ${quizData.length}`;
+  document.getElementById('quiz-question').textContent = q.q;
+  const opts = document.getElementById('quiz-options');
+  opts.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.textContent = opt;
+    btn.onclick = () => answerQuestion(i, btn);
+    opts.appendChild(btn);
+  });
+  document.getElementById('quiz-feedback').style.display = 'none';
+  document.getElementById('quiz-next').style.display = 'none';
+  answered = false;
+}
+
+function answerQuestion(idx, btn) {
+  if (answered) return;
+  answered = true;
+  const q = quizData[currentQ];
+  const allBtns = document.querySelectorAll('.quiz-option');
+  allBtns.forEach(b => b.disabled = true);
+  const fb = document.getElementById('quiz-feedback');
+  if (idx === q.ans) {
+    score++;
+    btn.classList.add('correct');
+    fb.style.cssText = 'display:block;background:#D1FAE5;border:1.5px solid #10B981;color:#065F46;padding:14px 18px;border-radius:10px;margin-bottom:16px;font-weight:700;';
+    fb.innerHTML = '✅ Correct! ' + q.explain;
+  } else {
+    btn.classList.add('wrong');
+    allBtns[q.ans].classList.add('correct');
+    fb.style.cssText = 'display:block;background:#FEE2E2;border:1.5px solid #EF4444;color:#991B1B;padding:14px 18px;border-radius:10px;margin-bottom:16px;font-weight:700;';
+    fb.innerHTML = '❌ Not quite. ' + q.explain;
+  }
+  document.getElementById('quiz-next').style.display = 'inline-block';
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= quizData.length) {
+    showResult();
+  } else {
+    loadQuestion();
+  }
+}
+
+function showResult() {
+  const pct = Math.round((score / quizData.length) * 100);
+  let msg, emoji;
+  if (pct >= 80) { msg = "Amazing! You really understand mental health. You're going to help yourself and others!"; emoji = "🏆"; }
+  else if (pct >= 50) { msg = "Great effort! You know quite a bit. Keep learning about mental health — it's one of the best things you can do for yourself."; emoji = "⭐"; }
+  else { msg = "Good start! The more you learn about mental health, the better you can take care of yourself. Read through our pages!"; emoji = "🌱"; }
+
+  document.getElementById('quiz-container').innerHTML = `
+    <div style="text-align:center;padding:20px 0;">
+      <div style="font-size:4rem;margin-bottom:12px;">${emoji}</div>
+      <h4 style="font-family:'Poppins',sans-serif;font-weight:800;margin-bottom:8px;">You scored ${score}/${quizData.length} (${pct}%)</h4>
+      <p style="color:var(--text-muted);line-height:1.7;max-width:440px;margin:0 auto 24px;">${msg}</p>
+      <button onclick="restartQuiz()" class="btn-purple">🔄 Try Again</button>
+    </div>`;
+}
+
+function restartQuiz() {
+  currentQ = 0; score = 0;
+  document.getElementById('quiz-container').innerHTML = `
+    <div id="quiz-progress" style="font-size:0.85rem;color:var(--text-muted);font-weight:700;margin-bottom:12px;"></div>
+    <div id="quiz-question" style="font-size:1.1rem;font-weight:800;margin-bottom:20px;color:var(--text);"></div>
+    <div id="quiz-options"></div>
+    <div id="quiz-feedback"></div>
+    <button id="quiz-next" onclick="nextQuestion()" style="display:none;" class="btn-purple">Next Question →</button>
+    <div id="quiz-result" style="display:none;"></div>`;
+  loadQuestion();
+}
+
+loadQuestion();
+
+// ===== CHALLENGES =====
+const challenges = [
+  "Say something kind to a classmate today",
+  "Write a thank-you note to someone who helped you",
+  "Help a family member without being asked",
+  "Smile at a stranger or say hello first",
+  "Forgive someone mentally — even if you don't say it out loud",
+  "Listen fully to someone without checking your phone",
+  "Do something kind for yourself (rest, your favourite food, etc.)",
+];
+
+function loadChallenges() {
+  const list = document.getElementById('challengeList');
+  const saved = JSON.parse(localStorage.getItem('te-challenges') || '{}');
+  list.innerHTML = '';
+  challenges.forEach((c, i) => {
+    const div = document.createElement('div');
+    div.className = `challenge-card ${saved[i] ? 'done' : ''}`;
+    div.innerHTML = `
+      <input type="checkbox" id="ch${i}" ${saved[i] ? 'checked' : ''} onchange="toggleChallenge(${i})">
+      <label for="ch${i}" style="cursor:pointer;font-weight:600;font-size:0.9rem;">${c}</label>`;
+    list.appendChild(div);
+  });
+  updateChallengeScore();
+}
+
+function toggleChallenge(i) {
+  const saved = JSON.parse(localStorage.getItem('te-challenges') || '{}');
+  saved[i] = !saved[i];
+  localStorage.setItem('te-challenges', JSON.stringify(saved));
+  loadChallenges();
+  if (saved[i]) showToast('🌟 Challenge completed! You\'re amazing!');
+}
+
+function updateChallengeScore() {
+  const saved = JSON.parse(localStorage.getItem('te-challenges') || '{}');
+  const done = Object.values(saved).filter(Boolean).length;
+  const el = document.getElementById('challengeScore');
+  el.textContent = done === 7 ? '🏆 All 7 done! You are a kindness champion!' :
+    done > 0 ? `${done}/7 challenges done — keep going! 💜` : 'Start your first challenge above!';
+}
+
+loadChallenges();
+
+// ===== JOURNAL =====
+let journalMood = '';
+document.getElementById('journalEntry').addEventListener('input', function() {
+  const words = this.value.trim().split(/\s+/).filter(w => w.length > 0).length;
+  document.getElementById('wordCount').textContent = `${words} word${words !== 1 ? 's' : ''}`;
+});
+
+function selectJournalMood(btn, emoji) {
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  journalMood = emoji;
+}
+
+function saveJournalEntry() {
+  const entry = document.getElementById('journalEntry').value.trim();
+  if (!entry) { showToast('✏️ Write something first!'); return; }
+  document.getElementById('journalSaved').style.display = 'block';
+  document.getElementById('journalEntry').value = '';
+  document.getElementById('wordCount').textContent = '0 words';
+  setTimeout(() => { document.getElementById('journalSaved').style.display = 'none'; }, 4000);
+  showToast('📓 Journal entry saved! 💜');
+}
+</script>
+</body>
+</html>
